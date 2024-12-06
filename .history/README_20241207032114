@@ -1,0 +1,6 @@
+Started off with initializing a new PostgreSQL server, 
+Going to create tables as per the requirement: 
+    1. User Details 
+    2. Admin Details (Including the API Key)
+    3. Train Details (Name, Source, destination, no_of_seats)
+    4. Booking Details (TrainId, UserId) => all the train info from train details for this UserId

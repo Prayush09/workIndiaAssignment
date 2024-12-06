@@ -1,0 +1,4 @@
+Started off with initializing a new PostgreSQL server, 
+Going to create tables as per the requirement: 
+    1. User Details
+    2. Admin Details (Including the API KEY Passed during the )
