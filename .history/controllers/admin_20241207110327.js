@@ -2,7 +2,7 @@ import Train from '../models/train.js';
 import Booking from '../models/booking.js';
 import User from '../models/user.js';
 import logger from '../config/logger.js';
-import pool from '../config/database.js';
+
 
 export default {
   // Train Management

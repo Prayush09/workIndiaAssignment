@@ -21,9 +21,10 @@ export default {
   },
 
   async seatCount(trainId) {
-    const client = await pool.connect(); 
+    const client = await pool.connect(); // Get a client connection for transaction handling
   
     try {
+      // Begin a transaction
       await client.query('BEGIN');
   
       const query = `
@@ -50,6 +51,7 @@ export default {
     const query = `
       SELECT * FROM trains 
       WHERE source = $1 AND destination = $2
+      AND departure_time > NOW()
     `;
     const { rows } = await pool.query(query, [source, destination]);
     return rows;

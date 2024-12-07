@@ -1,7 +1,7 @@
 import Booking from '../models/booking.js';
 import Train from '../models/train.js';
 import logger from '../config/logger.js';
-import pool from '../config/database.js';
+
 
 export default {
   async create(req, res) {
@@ -41,7 +41,7 @@ export default {
 
   async getBooking(req, res) {
     try {
-      const booking = await Booking.findById(req.query.id);
+      const booking = await Booking.findById(req.params.id);
       if (!booking) {
         return res.status(404).json({ message: 'Booking not found' });
       }

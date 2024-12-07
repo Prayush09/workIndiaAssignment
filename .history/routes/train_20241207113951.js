@@ -22,7 +22,7 @@ router.get('/search', [
   query('destination').trim().notEmpty()
 ], trainController.search);
 
-router.post('/seatCount', trainController.seatCount)
+
 
 router.patch('/:trainId/seats', [
   validateAdminKey,

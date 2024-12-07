@@ -13,6 +13,7 @@ export default {
         return res.status(400).json({ message: 'Email already registered' });
       }
 
+      // Check if this is an admin registration
       let role = 'USER';
       if (adminKey) {
         if (adminKey !== process.env.ADMIN_API_KEY) {
@@ -49,7 +50,7 @@ export default {
       if (!validPassword) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
-      //TODO: Fix the working of admin api key...
+      //TODO: Fix the working of 
       const token = jwt.sign(
         { id: user.id, role: user.role },
         process.env.JWT_SECRET,

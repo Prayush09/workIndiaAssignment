@@ -27,7 +27,7 @@ export const isAdmin = (req, res, next) => {
 };
 
 export const validateAdminKey = (req, res, next) => {
-  const adminKey = req.headers['x-api-key'];
+  const adminKey = req.headers['x-ad'];
   
   if (adminKey !== process.env.ADMIN_API_KEY) {
     return res.status(403).json({ message: 'Invalid admin key' });

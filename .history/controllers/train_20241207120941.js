@@ -27,8 +27,7 @@ export default {
   async search(req, res) {
     try {
       const { source, destination } = req.body;
-      console.log(source);
-      console.log(destination);
+      console.log(source)
       const trains = await Train.findByRoute(source, destination);
       res.json(trains);
     } catch (error) {

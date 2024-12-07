@@ -20,36 +20,16 @@ export default {
     return rows[0];
   },
 
-  async seatCount(trainId) {
-    const client = await pool.connect(); 
-  
-    try {
-      await client.query('BEGIN');
-  
-      const query = `
-        SELECT available_seats 
-        FROM trains 
-        WHERE id = $1
-        FOR UPDATE
-      `;
-      const { rows } = await client.query(query, [trainId]);
-  
-      await client.query('COMMIT');
-  
-      return rows[0].available_seats; 
-    } catch (error) {
-      await client.query('ROLLBACK'); 
-      throw error; 
-    } finally {
-      client.release(); 
-    }
-  }
-  ,
+  async seatCount(trainId){
+    const query = `SELECT available_seats FROM trains
+    WHERE `
+  },
 
   async findByRoute(source, destination) {
     const query = `
       SELECT * FROM trains 
       WHERE source = $1 AND destination = $2
+      AND departure_time > NOW()
     `;
     const { rows } = await pool.query(query, [source, destination]);
     return rows;

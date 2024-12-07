@@ -41,7 +41,7 @@ export default {
 
   async getBooking(req, res) {
     try {
-      const booking = await Booking.findById(req.query.id);
+      const booking = await Booking.findById(req.params.id);
       if (!booking) {
         return res.status(404).json({ message: 'Booking not found' });
       }

@@ -21,10 +21,8 @@ export default {
   },
 
   async seatCount(trainId) {
-    const client = await pool.connect(); 
-  
     try {
-      await client.query('BEGIN');
+      await pool.query('BEGIN');
   
       const query = `
         SELECT available_seats 
@@ -32,16 +30,16 @@ export default {
         WHERE id = $1
         FOR UPDATE
       `;
-      const { rows } = await client.query(query, [trainId]);
+      const { rows } = await pool.query(query, [trainId]);
   
-      await client.query('COMMIT');
+      await pool.query('COMMIT');
   
       return rows[0].available_seats; 
     } catch (error) {
-      await client.query('ROLLBACK'); 
+      await pool.query('ROLLBACK'); 
       throw error; 
     } finally {
-      client.release(); 
+      pool.release(); 
     }
   }
   ,
@@ -50,15 +48,16 @@ export default {
     const query = `
       SELECT * FROM trains 
       WHERE source = $1 AND destination = $2
+      AND departure_time > NOW()
     `;
     const { rows } = await pool.query(query, [source, destination]);
     return rows;
   },
 
   async updateSeats(trainId, seatsToBook) {
-    const client = await pool.connect();
+    const pool = await pool.connect();
     try {
-      await client.query('BEGIN');
+      await pool.query('BEGIN');
       
       // Get current seats with row lock
       const checkQuery = `
@@ -67,7 +66,7 @@ export default {
         WHERE id = $1 
         FOR UPDATE
       `;
-      const { rows } = await client.query(checkQuery, [trainId]);
+      const { rows } = await pool.query(checkQuery, [trainId]);
       
       if (rows[0].available_seats < seatsToBook) {
         throw new Error('Not enough seats available');
@@ -80,15 +79,15 @@ export default {
         WHERE id = $2
         RETURNING *
       `;
-      const result = await client.query(updateQuery, [seatsToBook, trainId]);
+      const result = await pool.query(updateQuery, [seatsToBook, trainId]);
       
-      await client.query('COMMIT');
+      await pool.query('COMMIT');
       return result.rows[0];
     } catch (error) {
-      await client.query('ROLLBACK');
+      await pool.query('ROLLBACK');
       throw error;
     } finally {
-      client.release();
+      pool.release();
     }
   }
 };

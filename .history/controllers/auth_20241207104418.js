@@ -13,6 +13,7 @@ export default {
         return res.status(400).json({ message: 'Email already registered' });
       }
 
+      // Check if this is an admin registration
       let role = 'USER';
       if (adminKey) {
         if (adminKey !== process.env.ADMIN_API_KEY) {

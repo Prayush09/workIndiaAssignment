@@ -50,6 +50,7 @@ export default {
     const query = `
       SELECT * FROM trains 
       WHERE source = $1 AND destination = $2
+      AND departure_time > NOW()
     `;
     const { rows } = await pool.query(query, [source, destination]);
     return rows;

@@ -28,7 +28,7 @@ export default {
     try {
       const { source, destination } = req.body;
       console.log(source);
-      console.log(destination);
+      console.log(destination)
       const trains = await Train.findByRoute(source, destination);
       res.json(trains);
     } catch (error) {

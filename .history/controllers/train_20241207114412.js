@@ -17,18 +17,13 @@ export default {
     try{
       const { trainId } = req.body;
       const seatCount = await Train.seatCount(trainId);
-      res.status(200).json({SeatCount: seatCount});
-    }catch(error){
-      logger.error('Seat Count error:', error);
-      res.status(500).json({message:"Failed to fetch count!"})
+      res.status(200).json(seatCount);
     }
   },
 
   async search(req, res) {
     try {
-      const { source, destination } = req.body;
-      console.log(source);
-      console.log(destination);
+      const { source, destination } = req.query;
       const trains = await Train.findByRoute(source, destination);
       res.json(trains);
     } catch (error) {
