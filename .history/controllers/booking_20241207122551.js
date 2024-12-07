@@ -14,6 +14,7 @@ export default {
 
       await Train.updateSeats(trainId, seats);
       
+      // Create booking
       const booking = await Booking.create(userId, trainId, seats);
       
       await client.query('COMMIT');

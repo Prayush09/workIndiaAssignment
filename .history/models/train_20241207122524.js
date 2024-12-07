@@ -72,6 +72,7 @@ export default {
         throw new Error('Not enough seats available');
       }
 
+      // Update seats
       const updateQuery = `
         UPDATE trains 
         SET available_seats = available_seats - $1

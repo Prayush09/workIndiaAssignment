@@ -5,7 +5,7 @@ import logger from '../config/logger.js';
 import pool from '../config/database.js';
 
 export default {
-
+  // Train Management
   async getAllTrains(req, res) {
     try {
       const query = `

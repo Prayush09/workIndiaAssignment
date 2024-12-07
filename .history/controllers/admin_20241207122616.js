@@ -5,7 +5,7 @@ import logger from '../config/logger.js';
 import pool from '../config/database.js';
 
 export default {
-
+  // Train Management
   async getAllTrains(req, res) {
     try {
       const query = `
@@ -27,6 +27,8 @@ export default {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
+
+      // Check for existing bookings
       const bookingsQuery = 'SELECT COUNT(*) FROM bookings WHERE train_id = $1';
       const { rows } = await client.query(bookingsQuery, [req.params.trainId]);
       
@@ -34,6 +36,7 @@ export default {
         throw new Error('Cannot delete train with existing bookings');
       }
 
+      // Delete train
       const deleteQuery = 'DELETE FROM trains WHERE id = $1 RETURNING *';
       const result = await client.query(deleteQuery, [req.params.trainId]);
       

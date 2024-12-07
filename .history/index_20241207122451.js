@@ -19,7 +19,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 
 });
 app.use(limiter);
